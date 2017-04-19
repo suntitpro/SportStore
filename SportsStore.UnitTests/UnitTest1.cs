@@ -32,10 +32,10 @@ namespace SportsStore.UnitTests
             var controller = new ProductController(mock.Object) {PageSize = 3};
 
             //Act
-            var result = (IEnumerable<Product>) controller.List(2).Model;
+            var result = (ProductsListViewModel) controller.List(2).Model;
 
             //Assert
-            var prodArray = result.ToArray();
+            var prodArray = result.Products.ToArray();
             Assert.IsTrue(prodArray.Length == 2);
             Assert.AreEqual(prodArray[0].Name, "P4");
             Assert.AreEqual(prodArray[1].Name, "P5");
@@ -68,5 +68,32 @@ namespace SportsStore.UnitTests
                             + @"<a class=""btn btn-default"" href=""Page3"">3</a>", result.ToString());
         }
 
+        [TestMethod]
+        public void Can_Send_Pagination_View_Model()
+        {
+            //Arrange
+            var mock = new Mock<IProductRepository>();
+            mock.Setup(m => m.Products).Returns(new Product[]
+            {
+                new Product {Id = 1, Name = "P1"},
+                new Product {Id = 2, Name = "P2"},
+                new Product {Id = 3, Name = "P3"},
+                new Product {Id = 4, Name = "P4"},
+                new Product {Id = 5, Name = "P5"}
+            });
+
+            //Arrange controller
+            var controller = new ProductController(mock.Object) { PageSize = 3 };
+
+            //Act
+            var result = (ProductsListViewModel)controller.List(2).Model;
+
+            //Assert
+            var pageInfo = result.PagingInfo;
+            Assert.AreEqual(pageInfo.TotalItems, 5);
+            Assert.AreEqual(pageInfo.CurrentPage, 2);
+            Assert.AreEqual(pageInfo.ItemsPerPage, 3);
+            Assert.AreEqual(pageInfo.TotalPages, 2);
+        }
     }
 }
