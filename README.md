@@ -1,4 +1,4 @@
-#SportStore
+#Sport Products Online Store
 
 Learning project: Online product catalog
 
