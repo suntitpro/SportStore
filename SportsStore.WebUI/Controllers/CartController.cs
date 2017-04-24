@@ -16,42 +16,33 @@ namespace SportsStore.WebUI.Controllers
         }
 
 
-        public RedirectToRouteResult AddToCart(int id, string returnUrl)
+        public RedirectToRouteResult AddToCart(Cart cart, int id, string returnUrl)
         {
             var product = _repository.Products.FirstOrDefault(p => p.Id == id);
 
             if (product != null)
             {
-                GetCart().AddItem(product, 1);
+                cart.AddItem(product, 1);
             }
 
             return RedirectToAction("Index", new {returnUrl});
         }
 
-        public RedirectToRouteResult RemoveFromCart(int id, string returnUrl)
+        public RedirectToRouteResult RemoveFromCart(Cart cart, int id, string returnUrl)
         {
             var product = _repository.Products.FirstOrDefault(p => p.Id == id);
 
             if (product != null)
             {
-                GetCart().RemoveDetail(product);
+                cart.RemoveDetail(product);
             }
 
             return RedirectToAction("Index", new { returnUrl });
         }
 
-        private Cart GetCart()
+        public ViewResult Index(Cart cart, string returnurl)
         {
-            var cart = (Cart) Session["Cart"];
-            if (cart != null) return cart;
-            cart = new Cart();
-            Session["Cart"] = cart;
-            return cart;
-        }
-
-        public ViewResult Index(string returnurl)
-        {
-            return View(new CartIndexViewModel {Cart = GetCart(), ReturnUrl = returnurl});
+            return View(new CartIndexViewModel {ReturnUrl = returnurl, Cart = cart});
         }
     }
 }
