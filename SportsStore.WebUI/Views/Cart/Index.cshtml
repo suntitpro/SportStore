@@ -8,7 +8,7 @@
     #cartTable td {vertical-align: middle}
 </style>
 
-<h2>Your cart</h2>
+<h2>Currently in your Shopping bag</h2>
 <table id="cartTable" class="table">
     <thead>
     <tr>
@@ -50,5 +50,6 @@
 </table>
 
 <div class="text-center">
-    <a class="btn btn-primary" href="@Model.ReturnUrl">Continue shopping</a>
+    <a class="btn btn-primary" href="@Model.ReturnUrl">BACK TO SHOPPING</a>
+    @Html.ActionLink("PROCEED TO CHECKOUT", "Checkout", null, new { @class = "btn btn-primary"})
 </div>
