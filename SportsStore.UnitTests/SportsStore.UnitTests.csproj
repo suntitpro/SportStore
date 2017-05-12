@@ -93,6 +93,7 @@
     <Compile Include="AdminTests.cs" />
     <Compile Include="Entities\CartTests.cs" />
     <Compile Include="EntityProductRepositoryTests.cs" />
+    <Compile Include="ProductControllerTests.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
